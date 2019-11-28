@@ -7,9 +7,34 @@ Settings::init();
 class Settings {
 
   private static $options = [];
+  private static $defaults = [
+      'api_key' => '',
+      'api_secret' => '',
+      'load_ace' => true,
+      'load_css' => true
+  ];
 
   public static function init() {
-    
+    self::load_settings();
+  }
+
+  /**
+   * Loads the settings from database options table
+   */
+  public static function load_settings() {
+    $opts = json_decode( get_option( 'code_playground' ), true );
+    if ( empty( $opts ) ) {
+      $opts = [];
+    }
+    self::$options = array_merge( self::$defaults, $opts );
+  }
+
+  /**
+   * Update the settings back into the database
+   */
+  public static function update_settings() {
+    $json = json_encode( self::$options );
+    update_option( 'code_playground', $json );
   }
 
   /**
@@ -21,7 +46,10 @@ class Settings {
    *                        it'll pull from self::$options
    */
   public static function get_option( $key, $default = false, $reload = false ) {
-    
+    if ( $reload ) {
+      self::load_settings();
+    }
+    return isset( self::$options[ $key ] ) ? self::$options[ $key ] : $default;
   }
 
   /**
@@ -33,7 +61,10 @@ class Settings {
    * @param boolean $defer
    */
   public static function set_option( $key, $value, $defer = false ) {
-    
+    self::$options[ $key ] = $value;
+    if ( ! $defer ) {
+      self::update_settings();
+    }
   }
 
 }

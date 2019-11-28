@@ -29,7 +29,7 @@ class Admin {
   public static function block_assets() {
     wp_enqueue_script(
             'classcube-code-playground-block',
-            plugins_url( 'js/dist/block.min.js', __DIR__ ),
+            plugins_url( 'js/dist/block.js', __DIR__ ),
             [ 'wp-blocks' ],
             filemtime( plugin_dir_path( __DIR__ ) . 'js/dist/block.min.js' )
     );
