@@ -15,4 +15,5 @@
  */
 $dir = plugin_dir_path( __FILE__ );
 require($dir . 'inc/Settings.php');
+require($dir . 'inc/User.php');
 require($dir . 'inc/Admin.php');
