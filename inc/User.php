@@ -33,13 +33,21 @@ class User {
 
     add_action( 'wp_enqueue_scripts', [ self::class, 'enqueue_scripts' ] );
     add_action( 'init', [ self::class, 'register_scripts' ] );
+
+    add_shortcode( 'cc_notexturize', function($atts, $content) {
+      return $content;
+    } );
+    add_filter( 'no_texturize_shortcodes', function($shortodes) {
+      $shortcodes[] = 'cc_notexturize';
+      return $shortcodes;
+    } );
   }
 
   public static function register_scripts() {
     wp_register_script( 'classcube-ace', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ace.js', [ 'jquery' ], null );
     wp_register_script( 'classcube-playground', plugins_url( 'js/dist/code-playground.min.js', __DIR__ ), [ 'jquery' ], filemtime( plugin_dir_path( __DIR__ ) . 'js/dist/code-playground.min.js' ) );
-    
-    wp_register_style('classcube-playground', plugins_url('css/playground.css', __DIR__), [], filemtime(plugin_dir_path(__DIR__) . 'css/playground.css'));
+
+    wp_register_style( 'classcube-playground', plugins_url( 'css/playground.css', __DIR__ ), [], filemtime( plugin_dir_path( __DIR__ ) . 'css/playground.css' ) );
   }
 
   /**
@@ -76,8 +84,8 @@ class User {
     if ( Settings::get_option( 'load_ace', true ) ) {
       wp_enqueue_script( 'classcube-ace' );
     }
-    if (Settings::get_option('load_css', true)) { 
-      wp_enqueue_style('classcube-playground'); 
+    if ( Settings::get_option( 'load_css', true ) ) {
+      wp_enqueue_style( 'classcube-playground' );
     }
   }
 
@@ -98,8 +106,38 @@ class User {
         'extraStyles' => ''
             ], $props );
     ob_start();
+    echo '[cc_notexturize]';
     include($template_path);
+    echo '[/cc_notexturize]';
     return ob_get_clean();
   }
 
+  /**
+   * Remove filters for the code playground block that interfere with
+   * the code contents. 
+   * 
+   * @param type $block_contents
+   * @param type $block
+   */
+  public static function clean_block_filters( $block_contents, $block ) {
+    if ($block['blockName'] == 'classcube/code-playground') {
+      remove_filter('the_content', 'wptexturize');
+      remove_filter('the_content', 'wpautop');
+    }
+    else {
+      add_filter('the_content', 'wptexturize');
+      add_filter('the_content', 'wpautop'); 
+    }
+  }
+
+//
+//add_filter( 'render_block', function ( $block_content, $block ) {
+//if ( 'acf/featured-pages' === $block[ 'blockName' ] ) {
+//remove_filter( 'the_content', 'wpautop' );
+//} elseif ( ! has_filter( 'the_content', 'wpautop' ) ) {
+//add_filter( 'the_content', 'wpautop' );
+//}
+//
+//return $block_content;
+//}, 10, 2 );
 }

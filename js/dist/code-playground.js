@@ -34,5 +34,15 @@ var classcubePlayground = {
         ace.edit(jQuery(el).parents('.codeplayground-wrapper').find('.codeplayground-editor')[0]).session.setValue(starter); 
       });
     });
+    
+    jQuery.each(jQuery('.codeplayground-wrapper button[data-button="submit"]'), function(idx, el) {
+      jQuery(el).click(function(evt) {
+        var ed = jQuery(el).parents('.codeplayground-wrapper').find('.codeplayground-editor');
+        var lang = ed.data('language');
+        var code = ace.edit(ed[0]).session.getValue();
+        console.info(lang);
+        console.info(code); 
+      });
+    });
   }
 }
