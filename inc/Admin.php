@@ -33,6 +33,10 @@ class Admin {
             [ 'wp-blocks', 'classcube-ace' ],
             filemtime( plugin_dir_path( __DIR__ ) . 'js/dist/block.min.js' )
     );
+    wp_localize_script('classcube-code-playground-block', 'classcube_code_playground', [
+        'font_size' => Settings::get_option('font_size', 18),
+        'ace_theme' => Settings::get_option('ace_theme', 'github')
+    ]);
     
   }
   

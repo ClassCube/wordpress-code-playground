@@ -11,7 +11,9 @@ class Settings {
       'api_key' => '',
       'api_secret' => '',
       'load_ace' => true,
-      'load_css' => true
+      'load_css' => true,
+      'font_size' => 18,
+      'ace_theme' => 'github'
   ];
 
   public static function init() {

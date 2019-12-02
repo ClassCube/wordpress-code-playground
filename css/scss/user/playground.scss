@@ -1,0 +1,108 @@
+/**
+ * Styles for Code Playground filter plugin
+ */
+
+.codeplayground-wrapper {
+
+  .codeplayground-console {
+    background: black;
+    height: 200px;
+    font-size: 18px;
+    font-family: monospace; 
+    padding: 4px; 
+    overflow: auto; 
+    color: white; 
+    white-space: pre;
+
+    .error, .stderr {
+      color: #b00;
+    }
+    .cursor {
+      color: #999;
+    }    
+
+    .blinking {
+      color: black;
+      -webkit-animation: 2s blink linear infinite;
+      -moz-animation: 2s blink linear infinite;
+      -ms-animation: 2s blink linear infinite;
+      -o-animation: 2s blink linear infinite;
+      animation: 2s blink linear infinite;
+    }
+
+  }
+  .codeplayground-editor {
+    margin: {
+      bottom: 4px;
+      top: 4px; 
+    }
+  }
+  
+  .buttons {
+    padding: {
+      top: 16px;
+      bottom: 16px;
+    }
+  }
+}
+
+
+@keyframes "blink" {
+  0% {
+    color: black; 
+  }
+  50% {
+    color: white;
+  }
+  100% {
+    color: black; 
+  }
+}
+
+@-moz-keyframes blink {
+  0% {
+    color: black; 
+  }
+  50% {
+    color: white;
+  }
+  100% {
+    color: black; 
+  }
+}
+
+@-webkit-keyframes "blink" {
+  0% {
+    color: black; 
+  }
+  50% {
+    color: white;
+  }
+  100% {
+    color: black; 
+  }
+}
+
+@-ms-keyframes "blink" {
+  0% {
+    color: black; 
+  }
+  50% {
+    color: white;
+  }
+  100% {
+    color: black; 
+  }
+}
+
+@-o-keyframes "blink" {
+  0% {
+    color: black; 
+  }
+  50% {
+    color: white;
+  }
+  100% {
+    color: black; 
+  }
+}

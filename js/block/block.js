@@ -32,14 +32,16 @@
             },
             // Defines the block within the editor.
             edit: function (props) {
-              var createElement = wp.element.createElement;
+              var createElement = wp.element.createElement; 
               interval = setInterval(function () {
                 var el = jQuery('div[data-block="' + props.clientId + '"]');
                 if (jQuery(el).length) {
                   if (!el.data('editor-loaded')) {
                     ed = ace.edit(jQuery('div[data-editor="' + props.clientId + '"]')[0], {
                       minLines: 5,
-                      fontSize: '18px'
+                      maxLines: Infinity,
+                      fontSize: classcube_code_playground.font_size + 'px',
+                      theme: 'ace/theme/' + classcube_code_playground.ace_theme
                     });
                     ed.session.setMode('ace/mode/' + props.attributes.language); 
                     ed.setValue(jQuery('textarea[data-parent="' + props.clientId + '"]').val(), -1);
@@ -109,7 +111,6 @@
                         'data-editor': props.clientId,
                         style: {
                           width: '100%',
-                          height: '250px',
                           position: 'relative'
                         }
                       }, ''))
