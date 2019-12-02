@@ -27,5 +27,12 @@ var classcubePlayground = {
         theme: 'ace/theme/' + jQuery(el).data('theme')
       }); 
     });
+    
+    jQuery.each(jQuery('.codeplayground-wrapper button[data-button="reset"]'), function(idx, el) {
+      jQuery(el).click(function(evt) {
+        var starter = jQuery(el).data('starter');
+        ace.edit(jQuery(el).parents('.codeplayground-wrapper').find('.codeplayground-editor')[0]).session.setValue(starter); 
+      });
+    });
   }
 }

@@ -32,7 +32,7 @@ $props[ 'id' ] = uniqid( 'editor-' );
   <div class="codeplayground-editor" data-editor data-id="<?php echo $props[ 'id' ]; ?>" data-fontsize="<?php echo esc_attr(Settings::get_option('font_size', 18)); ?>" data-theme="<?php echo esc_attr(Settings::get_option('ace_theme')) ?>" data-language="<?php echo $props[ 'language' ]; ?>"><?php echo $props[ 'code' ]; ?></div>
   <div class="codeplayground-console">&gt; </div>
   <div class="buttons">
-    <button class="play"><?php _e('Submit', 'code-playground'); ?></button>
-    <button class="reset" data-starter="<?php echo esc_attr( $props[ 'code' ] ); ?>"><?php _e('Reset', 'code-playground'); ?></button>
+    <button class="play" data-button="submit"><?php _e('Submit', 'code-playground'); ?></button>
+    <button class="reset" data-button="reset" data-id="<?php echo esc_attr($props['id']); ?>" data-starter="<?php echo esc_attr( $props[ 'code' ] ); ?>"><?php _e('Reset', 'code-playground'); ?></button>
   </div>
 </div>
