@@ -111,33 +111,4 @@ class User {
     echo '[/cc_notexturize]';
     return ob_get_clean();
   }
-
-  /**
-   * Remove filters for the code playground block that interfere with
-   * the code contents. 
-   * 
-   * @param type $block_contents
-   * @param type $block
-   */
-  public static function clean_block_filters( $block_contents, $block ) {
-    if ($block['blockName'] == 'classcube/code-playground') {
-      remove_filter('the_content', 'wptexturize');
-      remove_filter('the_content', 'wpautop');
-    }
-    else {
-      add_filter('the_content', 'wptexturize');
-      add_filter('the_content', 'wpautop'); 
-    }
-  }
-
-//
-//add_filter( 'render_block', function ( $block_content, $block ) {
-//if ( 'acf/featured-pages' === $block[ 'blockName' ] ) {
-//remove_filter( 'the_content', 'wpautop' );
-//} elseif ( ! has_filter( 'the_content', 'wpautop' ) ) {
-//add_filter( 'the_content', 'wpautop' );
-//}
-//
-//return $block_content;
-//}, 10, 2 );
 }
