@@ -6,6 +6,9 @@
   var InspectorControls = wp.blocks.InspectorControls;
   var ToggleControl = wp.blocks.ToggleControl;
   var BlockControls = wp.blocks.BlockControls;
+
+  var ed = [];
+
   /**
    * Register block
    *
@@ -32,33 +35,12 @@
             },
             // Defines the block within the editor.
             edit: function (props) {
-              var createElement = wp.element.createElement; 
-              interval = setInterval(function () {
-                var el = jQuery('div[data-block="' + props.clientId + '"]');
-                if (jQuery(el).length) {
-                  if (!el.data('editor-loaded')) {
-                    ed = ace.edit(jQuery('div[data-editor="' + props.clientId + '"]')[0], {
-                      minLines: 5,
-                      maxLines: Infinity,
-                      fontSize: classcube_code_playground.font_size + 'px',
-                      theme: 'ace/theme/' + classcube_code_playground.ace_theme
-                    });
-                    ed.session.setMode('ace/mode/' + props.attributes.language); 
-                    ed.setValue(jQuery('textarea[data-parent="' + props.clientId + '"]').val(), -1);
-                    ed.on('change', function(evt) {
-                      props.setAttributes({code: ed.getValue()});                       
-                    });
-                    jQuery('textarea[data-parent="' + props.clientId + '"]').hide();
-                    el.data('editor-loaded', true);
-                  }
-                  clearInterval(interval);
-                }
-              }, 250);
+              var createElement = wp.element.createElement;
               return createElement(
                       wp.element.Fragment,
                       null,
                       createElement(
-                              wp.editor.InspectorControls,
+                              wp.blockEditor.InspectorControls,
                               null,
                               createElement(wp.components.PanelBody, {
                                 title: __('Editor Options', 'code-playground'),
@@ -74,7 +56,7 @@
                                                 ],
                                                 onChange: function (val) {
                                                   props.setAttributes({language: val});
-                                                  ace.edit(jQuery('div[data-editor="' + props.clientId + '"]')[0]).session.setMode('ace/mode/' + val); 
+                                                  ace.edit(jQuery('div[data-editor="' + props.clientId + '"]')[0]).session.setMode('ace/mode/' + val);
                                                 }
                                               })
                                       ),
@@ -113,7 +95,26 @@
                           width: '100%',
                           position: 'relative'
                         }
-                      }, ''))
+                      }, '')),
+                      /* This is loading a 1x1 transparent GIF just so we can get the
+                       * onLoad event to trigger loading Ace editor. 
+                       */
+                      createElement('img', {
+                        src: 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==',
+                        onLoad: function (evt) {
+                          var ed = ace.edit(jQuery('div[data-editor="' + props.clientId + '"]')[0], {
+                            minLines: 5,
+                            maxLines: Infinity,
+                            fontSize: classcube_code_playground.font_size + 'px',
+                            theme: 'ace/theme/' + classcube_code_playground.ace_theme
+                          });
+                          ed.session.setMode('ace/mode/' + props.attributes.language);
+                          ed.setValue(jQuery('textarea[data-parent="' + props.clientId + '"]').val(), -1);
+                          ed.on('change', function (evt) {
+                            props.setAttributes({code: ed.getValue()});
+                          });
+                        }
+                      })
                       );
 
             },
