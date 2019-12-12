@@ -113,7 +113,7 @@ class User {
     echo '[cc_notexturize]';
     include($template_path);
     echo '[/cc_notexturize]';
-    return ob_get_clean();
+    return apply_filters( 'classcube_playground_editor', ob_get_clean() );
   }
 
   /**
