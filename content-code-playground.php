@@ -21,7 +21,7 @@
  * into your site. If you'd like to customize the layout, copy this
  * file to the root of your theme folder and that copy will be used
  * instead of this one. You don't want to edit this file because your
- * changes might be overwritten by a future update to this plugin. 
+ * changes might be overwritten by a future update to this plugin.   
  */
 global $post;
 use \ClassCube\WordPress\Playground\Settings; 

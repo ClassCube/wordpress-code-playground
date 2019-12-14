@@ -12,6 +12,7 @@
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       code-playground
+ * Domain Path:       /lang
  */
 $dir = plugin_dir_path( __FILE__ );
 require($dir . 'inc/Settings.php');
