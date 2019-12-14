@@ -92,7 +92,7 @@ module.exports = function (grunt) {
     addtextdomain: {
       options: {
         textdomain: 'code-playground', // Project text domain.
-        updateDomains: false  // List of text domains to replace.
+        updateDomains: true  // List of text domains to replace.
       },
       target: {
         files: {
